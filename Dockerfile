@@ -29,8 +29,8 @@ RUN set -x \
         libmpfr-dev \
         unzip \
         wget \
-    && apt-get update \
-    && apt-get upgrade -y
+    && apt-get update 
+#    && apt-get upgrade -y
 
 # GIS packages
 RUN set -x \
@@ -39,7 +39,7 @@ RUN set -x \
         libproj-dev \
         libgeotiff-dev \
     && apt-get update \
-    && apt-get upgrade -y \
+#    && apt-get upgrade -y \
     && apt-get autoremove --purge -y \
     && apt-get autoclean -y \
     && rm -rf /var/cache/apt/* /tmp/*
@@ -166,5 +166,9 @@ RUN set -x; \
     -DLASZIP_LIBRARY=/opt/laszip-src-2.2.0/build/lib/liblaszip.so \
     -DCGAL_DIR=/opt/cgal-releases-CGAL-4.10/build \
     ; \
-    make
+    make \
+    ;\
+    rm -rf /var/cache/apt/* /tmp/*
+
+ENTRYPOINT $LIBDIR/3dfier/build/3dfier
 
