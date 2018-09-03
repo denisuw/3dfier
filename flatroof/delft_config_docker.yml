@@ -1,0 +1,34 @@
+input_polygons:
+  - datasets: 
+      - /opt/3dfier_src/3dfier/flatroof/delft_testarea.geojson
+    uniqueid: gml_id
+    lifting: Building
+    height_field: relatievehoogteligging
+
+lifting_options: 
+  Building:
+    lod: 1
+    floor: true
+    ground:
+      height: percentile-10
+      use_LAS_classes:
+        - 2
+        - 9
+    roof:
+      height: percentile-25
+      use_LAS_classes:
+        #- 0
+        #- 1
+        - 6
+
+input_elevation:
+  - datasets:
+       - /opt/3dfier_src/3dfier/example_data/ahn3/ahn3_cropped.las
+       - /opt/3dfier_src/3dfier/flatroof/delft_topdesk_extent.las
+    omit_LAS_classes:
+    thinning: 0
+
+options:
+  building_radius_vertex_elevation: 0.5
+  radius_vertex_elevation: 0.5
+  threshold_jump_edges: 0.5
