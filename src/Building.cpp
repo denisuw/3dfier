@@ -86,7 +86,6 @@ std::string Building::get_all_z_values() {
 
 std::string Building::get_all_distances() {
   std::vector<float> alldist (_distancesinside[0].begin(), _distancesinside[0].end());
-  alldist.insert(alldist.end(), _distancesinside[0].begin(), _distancesinside[0].end());
   std::sort(alldist.begin(), alldist.end());
   std::stringstream ss;
   for (auto& z : alldist)
@@ -116,9 +115,11 @@ int Building::get_height_roof_at_percentile(float percentile) {
 
 std::vector<double> Building::get_RMSE() {
   std::vector<double> rmse;
-  for (int i = 0; i < _distancesinside.size(); i++) {
-    std::cout << "size: " << _distancesinside[i].size() << " ";
-    auto& distinside = _distancesinside[i];
+  for(auto& dist: _distancesinside){
+    std::vector<double> distinside = dist.second;
+  //for (int i = 0; i < _distancesinside.size(); i++) {
+    std::cout << "size: " << distinside.size() << " ";
+  //  auto& distinside = _distancesinside[i];
     if (distinside.empty()) {
       rmse.push_back(-9999.0);
     }
@@ -168,18 +169,11 @@ bool Building::add_elevation_point(Point2 &p, double z, float radius, int lascla
 }
 
 void Building::clear_distances() {
-  int key = _heightref_top * 100;
-  int idx = _rpctile_map[key];
-  if (!_distancesinside[idx].empty()) { _distancesinside[idx].clear(); }
+  if (!_distancesinside[_heightref_top].empty()) { _distancesinside[_heightref_top].clear(); }
 }
 
-bool Building::push_distance(double dist, int lasclass) {
-  //TODO B: remove the if clause it doesnt make sense
-  if ( (_las_classes_roof.empty() == true) || (_las_classes_roof.count(lasclass) > 0) ) {
-    int key = _heightref_top * 100;
-    int idx = _rpctile_map[key];
-    _distancesinside[idx].push_back(dist);
-  }
+bool Building::push_distance(double dist) {
+  _distancesinside[_heightref_top].push_back(dist);
   return true;
 }
 

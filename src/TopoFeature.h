@@ -50,7 +50,7 @@ public:
   virtual void          get_cityjson(nlohmann::json& j, std::unordered_map<std::string, unsigned long> &dPts) = 0;
   virtual void          get_citygml_imgeo(std::wostream& of) = 0;
   virtual bool          get_shape(OGRLayer*, bool writeAttributes, AttributeMap extraAttributes = AttributeMap()) = 0;
-  virtual bool          push_distance(double dist, int lasclass) = 0;
+  virtual bool          push_distance(double dist) = 0;
   virtual void          clear_distances() = 0;
   virtual void          set_heightref_top(float h) {};
 
@@ -91,7 +91,7 @@ public:
   std::vector<Triangle>                           _triangles_vw;
   AABB_Tree                                       _triangle_tree;
   std::list<Triangle3D>                           _cgal_tris;
-  std::vector< std::vector<double> >              _distancesinside;
+  std::unordered_map< float, std::vector<double> > _distancesinside;
 
 protected:
   Polygon2*                         _p2;

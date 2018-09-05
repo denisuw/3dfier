@@ -53,7 +53,7 @@ bool Separation::add_elevation_point(Point2 &p, double z, float radius, int lasc
   return true;
 }
 
-bool Separation::push_distance(double dist, int lasclass) {
+bool Separation::push_distance(double dist) {
   _distancesinside[0].push_back(dist);
   return true;
 }

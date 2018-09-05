@@ -58,8 +58,7 @@ public:
   bool threeDfy(bool stitching = true);
   bool construct_CDT();
   void construct_TriTrees();
-  void add_elevation_point(liblas::Point const& laspt);
-  void add_point_distance(liblas::Point const& laspt, bool multi_rmse);
+  void add_elevation_point(liblas::Point const& laspt, bool distance, bool multi_rmse);
 
   unsigned long get_num_polygons();
   const std::vector<TopoFeature*>&  get_polygons3d();

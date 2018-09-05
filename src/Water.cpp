@@ -58,7 +58,7 @@ bool Water::add_elevation_point(Point2 &p, double z, float radius, int lasclass)
   return true;
 }
 
-bool Water::push_distance(double dist, int lasclass) {
+bool Water::push_distance(double dist) {
   _distancesinside[0].push_back(dist);
   return true;
 }

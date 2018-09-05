@@ -1081,8 +1081,7 @@ void TopoFeature::create_triangle_tree() {
   }
 }
 
-double TopoFeature::get_point_distance(liblas::Point const& laspt,
-                                       float radius) {
+double TopoFeature::get_point_distance(liblas::Point const& laspt, float radius) {
   Point2 p(laspt.GetX(), laspt.GetY());
   double dist = std::numeric_limits<double>::quiet_NaN();
   if (within_range(p, *(_p2), radius)) {
