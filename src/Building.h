@@ -69,7 +69,6 @@ private:
   static bool          _building_inner_walls;
   static std::set<int> _las_classes_roof;
   static std::set<int> _las_classes_ground;
-  std::map<int,int>    _rpctile_map;
 };
 
 #endif /* Building_h */

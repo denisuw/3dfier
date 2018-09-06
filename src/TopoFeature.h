@@ -91,7 +91,7 @@ public:
   std::vector<Triangle>                           _triangles_vw;
   AABB_Tree                                       _triangle_tree;
   std::list<Triangle3D>                           _cgal_tris;
-  std::unordered_map< float, std::vector<double> > _distancesinside;
+  std::map< float, std::vector<double> >          _distancesinside;
 
 protected:
   Polygon2*                         _p2;

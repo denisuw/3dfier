@@ -719,14 +719,11 @@ void Map3d::add_elevation_point(liblas::Point const& laspt, bool distance, bool 
  
     if (bInsert == true) { //-- only insert if in the allowed LAS classes
       if (distance) {
-        if (multi_rmse) {
-          if (f->get_class() != BUILDING) {
-            bInsert = false;
+        if (multi_rmse && f->get_class() == BUILDING) {
+          double dist = f->get_point_distance(laspt, radius);
+          if (std::isfinite(dist)) {
+            f->push_distance(dist);
           }
-        }
-        double dist = f->get_point_distance(laspt, radius);
-        if (std::isfinite(dist)) {
-          f->push_distance(dist);
         }
       }
       else {

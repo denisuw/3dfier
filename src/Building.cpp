@@ -48,14 +48,6 @@ Building::Building(char *wkt, std::string layername, AttributeMap attributes, st
   _building_triangulate = building_triangulate;
   _building_include_floor = building_include_floor;
   _building_inner_walls = building_inner_walls;
-  _rpctile_map[0] = 0;
-  _rpctile_map[10] = 1;
-  _rpctile_map[25] = 2;
-  _rpctile_map[50] = 3;
-  _rpctile_map[75] = 4;
-  _rpctile_map[90] = 5;
-  _rpctile_map[95] = 6;
-  _rpctile_map[99] = 7;
 }
 
 void Building::set_las_classes_roof(std::set<int> theset)
@@ -117,17 +109,15 @@ std::vector<double> Building::get_RMSE() {
   std::vector<double> rmse;
   for(auto& dist: _distancesinside){
     std::vector<double> distinside = dist.second;
-  //for (int i = 0; i < _distancesinside.size(); i++) {
-    std::cout << "size: " << distinside.size() << " ";
-  //  auto& distinside = _distancesinside[i];
+    //std::cout << "size: " << distinside.size() << " ";
     if (distinside.empty()) {
       rmse.push_back(-9999.0);
     }
     else {
       double sum = 0.0;
-      for (double& d : distinside) sum += d;
+      for (double d : distinside) sum += d;
       double n = distinside.size();
-      auto rm = sqrt(sum/n);
+      double rm = sqrt(sum/n);
       std::cout << "rmse: " << rm << "; ";
       rmse.push_back(rm);
     }
@@ -169,7 +159,9 @@ bool Building::add_elevation_point(Point2 &p, double z, float radius, int lascla
 }
 
 void Building::clear_distances() {
-  if (!_distancesinside[_heightref_top].empty()) { _distancesinside[_heightref_top].clear(); }
+  if (!_distancesinside[_heightref_top].empty()) {
+    _distancesinside[_heightref_top].clear();
+  }
 }
 
 bool Building::push_distance(double dist) {
@@ -348,9 +340,7 @@ void Building::get_csv(std::wostream& of, int stats) {
     this->get_height_ground_at_percentile(_heightref_base) / 100.0;
   if (stats == 1) {
     std::vector<double> rmse = this->get_RMSE();
-    int key = _heightref_top * 100;
-    int idx = _rpctile_map[key];
-    of << ";" << rmse[idx] << std::endl;
+    of << ";" << rmse[_heightref_top] << std::endl;
   }
   else {
     std::clog << this->get_id() << "\t" << "no RMSE" << std::endl;
