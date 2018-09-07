@@ -48,6 +48,14 @@ Building::Building(char *wkt, std::string layername, AttributeMap attributes, st
   _building_triangulate = building_triangulate;
   _building_include_floor = building_include_floor;
   _building_inner_walls = building_inner_walls;
+  _distancesinside[0.0f];
+  _distancesinside[0.1f];
+  _distancesinside[0.25f];
+  _distancesinside[0.5f];
+  _distancesinside[0.75f];
+  _distancesinside[0.9f];
+  _distancesinside[0.95f];
+  _distancesinside[0.99f];
 }
 
 void Building::set_las_classes_roof(std::set<int> theset)
@@ -77,7 +85,7 @@ std::string Building::get_all_z_values() {
 }
 
 std::string Building::get_all_distances() {
-  std::vector<float> alldist (_distancesinside[0].begin(), _distancesinside[0].end());
+  std::vector<double> alldist (_distancesinside.at(0).begin(), _distancesinside.at(0).end());
   std::sort(alldist.begin(), alldist.end());
   std::stringstream ss;
   for (auto& z : alldist)
@@ -115,7 +123,9 @@ std::vector<double> Building::get_RMSE() {
     }
     else {
       double sum = 0.0;
-      for (double d : distinside) sum += d;
+      for (double d : distinside) {
+        sum += d;
+      }
       double n = distinside.size();
       double rm = sqrt(sum/n);
       std::cout << "rmse: " << rm << "; ";
@@ -159,8 +169,8 @@ bool Building::add_elevation_point(Point2 &p, double z, float radius, int lascla
 }
 
 void Building::clear_distances() {
-  if (!_distancesinside[_heightref_top].empty()) {
-    _distancesinside[_heightref_top].clear();
+  if (_distancesinside.count(_heightref_top) > 0) {
+    _distancesinside.at(_heightref_top).clear();
   }
 }
 

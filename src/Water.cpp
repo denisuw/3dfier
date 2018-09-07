@@ -64,7 +64,9 @@ bool Water::push_distance(double dist) {
 }
 
 void Water::clear_distances() {
-  if (!_distancesinside[0].empty()) { _distancesinside[0].clear(); }
+  if (_distancesinside.count(0) > 0) {
+    _distancesinside.at(0).clear();
+  }
 }
 
 bool Water::lift() {

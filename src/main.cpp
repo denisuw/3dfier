@@ -559,7 +559,7 @@ int main(int argc, const char * argv[]) {
 
       auto startPoints = boost::chrono::high_resolution_clock::now();
       map3d.construct_TriTrees();
-      for (auto file : elevationFiles) {
+      for (PointFile file : elevationFiles) {
         bool added = map3d.add_las_file(file, distance, multi_rmse);
         if (!added) {
           std::cerr << "ERROR: corrupt file " << file.filename << std::endl;
